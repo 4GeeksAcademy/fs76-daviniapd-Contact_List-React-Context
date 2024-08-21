@@ -1,3 +1,5 @@
+import { contacts } from "../views/contacts";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -11,6 +13,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					title: "SECOND",
 					background: "white",
 					initial: "white"
+				}
+			],
+
+			contacts: [
+				{
+					fullName: "Pepa Morales",
+					email: "holasoypepa@yahoo.org",
+					phone: "(-45) 834 023 213",
+					adress: "C/Alegría, 123 - San Borondón, 00000"
+
 				}
 			]
 		},
