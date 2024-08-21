@@ -11,7 +11,7 @@ export const Contacts = () => {
 	return (
 		<div className="container m-5 mx-auto w-75">
 			<div className="d-flex justify-content-end mb-3">
-				<Link to="/addContact">
+				<Link to="/">
 					<button className="btn btn-success">Add new contact</button>
 				</Link>
 			</div>

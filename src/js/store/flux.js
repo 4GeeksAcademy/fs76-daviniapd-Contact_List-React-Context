@@ -23,6 +23,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					phone: "(-45) 834 023 213",
 					adress: "C/Alegría, 123 - San Borondón, 00000"
 
+				},
+				{
+					fullName: "Carmen Machi",
+					email: "holasoyaida@hotmail.org",
+					phone: "(+00) 123 456 789",
+					adress: "C/Desengaño, 23 - Lavapiés, 00000"
+
 				}
 			]
 		},
