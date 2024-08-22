@@ -34,26 +34,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				getActions().changeColor(0, "green");
 			},
 			
-			addContact: (newContact) => {
-				console.log("Enviando a la API:", newContact); // Agregar esto para ver los datos enviados a la API
+			addContact: (newContact, onSuccess, onError) => {
 				fetch('https://playground.4geeks.com/contact/agendas/sole/contacts', {
-				  method: 'POST',
-				  headers: {
-					'Content-Type': 'application/json'
-				  },
-				  body: JSON.stringify(newContact)
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(newContact)
 				})
 				.then(resp => {
-					console.log(resp); // Agregar esto para ver la respuesta de la API
+					if (!resp.ok) {
+						throw new Error('Error creating user');
+					}
 					return resp.json();
-				  })
-				  .then(data => {
-					console.log(data); // Agregar esto para ver los datos recibidos
+				})
+				.then(data => {
+					console.log("User created:", data);
 					const store = getStore();
 					setStore({ contacts: [...store.contacts, data] });
-				  })
-				.catch(error => console.log(error));
-			  },
+					onSuccess();
+				})
+				.catch(error => {
+					console.log(error);
+					onError();
+				});
+			},
 		
 
 			loadSomeData: () => {
