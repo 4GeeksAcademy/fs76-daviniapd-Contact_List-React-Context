@@ -1,5 +1,3 @@
-import { contacts } from "../views/contacts";
-
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -17,16 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 
-			contacts: [
-				{
-					name: "",
-					email: "",
-					phone: "",
-					address: ""
-
-				},
-
-			]
+			contacts: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -36,29 +25,38 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 			addContact: (newContact, onSuccess, onError) => {
 				fetch('https://playground.4geeks.com/contact/agendas/sole/contacts', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(newContact)
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json'
+				  },
+				  body: JSON.stringify(newContact)
 				})
-				.then(resp => {
-					if (!resp.ok) {
-						throw new Error('Error creating user');
-					}
-					return resp.json();
-				})
+				.then(resp => resp.json())
 				.then(data => {
-					console.log("User created:", data);
-					const store = getStore();
-					setStore({ contacts: [...store.contacts, data] });
-					onSuccess();
+				  const store = getStore();
+				  setStore({ contacts: [...store.contacts, data] }); 
+				  onSuccess();
 				})
 				.catch(error => {
-					console.log(error);
-					onError();
+				  console.log(error);
+				  onError();
 				});
-			},
+			  },
+
+			  loadContacts: () => {
+				return fetch('https://playground.4geeks.com/contact/agendas/sole/contacts')
+				  .then(resp => {
+					console.log('Response:', resp);
+					return resp.json();
+				  })
+				  .then(data => {
+					console.log('Data:', data);
+					const store = getStore();
+					setStore({ ...store, contacts: data.contacts });
+					return data;
+				  })
+				  .catch(error => console.log(error));
+			  },
 		
 
 			loadSomeData: () => {

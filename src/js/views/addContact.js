@@ -15,21 +15,30 @@ export const AddContact = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        actions.addContact(newContact, 
-            () => {
-                setAlert({ type: 'success', message: 'User created successfully' });
-                setTimeout(() => {
-                    navigate('/contacts');
-                }, 2000);
-            },
-        );
-    };
+        const { name, email, phone, address } = newContact;
+      
+        if (!name.trim() || !email.trim() || !phone.trim() || !address.trim()) {
+          setAlert({ type: 'danger', message: 'Please fill in all fields' });
+        } else {
+          actions.addContact(newContact, () => {
+            setAlert({ type: 'success', message: 'User created successfully' });
+            setTimeout(() => {
+              navigate('/contacts');
+            }, 2000);
+          });
+        }
+      };
 
     return (
         <>
             <form onSubmit={handleSubmit} className="m-5 mx-auto w-75">
                 <h1 className="text-center">Add a new contact</h1>
-                {alert && <div className={`alert alert-${alert.type}`} role="alert">{alert.message}</div>}
+                {alert && (
+                    <div className={`alert alert-dismissible fade show alert-${alert.type}`} role="alert">
+                        {alert.message}
+                        <i type="button" className=" btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></i>
+                    </div>
+                )}                
                 <div className="mb-3">
                     <label htmlFor="nameInput" className="form-label">Full Name</label>
                     <input type="text" value={newContact.name} onChange={(e) => setNewContact({ ...newContact, name: e.target.value })} className="form-control" id="nameInput" aria-describedby="name" placeholder="Full Name" />
