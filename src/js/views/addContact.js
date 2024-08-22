@@ -16,29 +16,32 @@ export const AddContact = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const { name, email, phone, address } = newContact;
-      
+
         if (!name.trim() || !email.trim() || !phone.trim() || !address.trim()) {
-          setAlert({ type: 'danger', message: 'Please fill in all fields' });
+            if (!alert || alert.type !== 'danger') {
+                setAlert({ type: 'danger', message: ' Please complete all the fields' });
+            }
         } else {
-          actions.addContact(newContact, () => {
-            setAlert({ type: 'success', message: 'User created successfully' });
-            setTimeout(() => {
-              navigate('/contacts');
-            }, 2000);
-          });
+            actions.addContact(newContact, () => {
+                setAlert({ type: 'success', message: ' User created successfully' });
+                setTimeout(() => {
+                    navigate('/contacts');
+                }, 1000);
+            });
         }
-      };
+    };
 
     return (
         <>
             <form onSubmit={handleSubmit} className="m-5 mx-auto w-75">
                 <h1 className="text-center">Add a new contact</h1>
                 {alert && (
-                    <div className={`alert alert-dismissible fade show alert-${alert.type}`} role="alert">
+                    <div className={`alert fade show alert-${alert.type}`} role="alert">
+                        {alert.type === 'danger' ? <i className="fa-solid fa-triangle-exclamation"></i> : <i className="fa-solid fa-circle-check"></i>}
                         {alert.message}
-                        <i type="button" className=" btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></i>
+                        <i type="button" className="btn-close float-end" data-bs-dismiss="alert" aria-label="Close" onClick={() => setAlert(null)}></i>
                     </div>
-                )}                
+                )}
                 <div className="mb-3">
                     <label htmlFor="nameInput" className="form-label">Full Name</label>
                     <input type="text" value={newContact.name} onChange={(e) => setNewContact({ ...newContact, name: e.target.value })} className="form-control" id="nameInput" aria-describedby="name" placeholder="Full Name" />
