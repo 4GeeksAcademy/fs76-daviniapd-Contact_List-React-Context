@@ -1,5 +1,6 @@
 import { contacts } from "../views/contacts";
 
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -18,19 +19,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			contacts: [
 				{
-					fullName: "Pepa Morales",
-					email: "holasoypepa@yahoo.org",
-					phone: "(-45) 834 023 213",
-					adress: "C/Alegría, 123 - San Borondón, 00000"
+					name: "",
+					email: "",
+					phone: "",
+					address: ""
 
 				},
-				{
-					fullName: "Carmen Machi",
-					email: "holasoyaida@hotmail.org",
-					phone: "(+00) 123 456 789",
-					adress: "C/Desengaño, 23 - Lavapiés, 00000"
 
-				}
 			]
 		},
 		actions: {
@@ -38,11 +33,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
+			
+			addContact: (newContact) => {
+				console.log("Enviando a la API:", newContact); // Agregar esto para ver los datos enviados a la API
+				fetch('https://playground.4geeks.com/contact/agendas/sole/contacts', {
+				  method: 'POST',
+				  headers: {
+					'Content-Type': 'application/json'
+				  },
+				  body: JSON.stringify(newContact)
+				})
+				.then(resp => {
+					console.log(resp); // Agregar esto para ver la respuesta de la API
+					return resp.json();
+				  })
+				  .then(data => {
+					console.log(data); // Agregar esto para ver los datos recibidos
+					const store = getStore();
+					setStore({ contacts: [...store.contacts, data] });
+				  })
+				.catch(error => console.log(error));
+			  },
+		
+
 			loadSomeData: () => {
 				/**
 					fetch().then().then(data => setStore({ "foo": data.bar }))
 				*/
+
 			},
+
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
