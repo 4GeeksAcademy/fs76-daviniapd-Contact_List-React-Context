@@ -1,3 +1,4 @@
+import { redirect } from "react-router";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -44,7 +45,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			  },
 
 			  loadContacts: () => {
-				return fetch('https://playground.4geeks.com/contact/agendas/sole/contacts')
+				return fetch("https://playground.4geeks.com/contact/agendas/sole/contacts")
 				  .then(resp => {
 					console.log('Response:', resp);
 					return resp.json();
@@ -57,14 +58,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				  })
 				  .catch(error => console.log(error));
 			  },
-		
 
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-
-			},
+			  deleteContacts: (contactId) => {
+				const store = getStore();
+				const requestOptions = { 
+				  method: "DELETE",
+				  redirect: "follow"
+				};
+				return fetch("https://playground.4geeks.com/contact/agendas/sole/contacts/" + contactId, requestOptions)
+				.then((resp) => {
+					console.log('Response:', resp);
+					return resp.text();
+				})
+				.then((data) => {
+					console.log('Data:', data);
+					const contacts = store.contacts.filter((contact) => contact.id !== contactId);
+					setStore({ contacts: contacts });
+				})
+				.catch((error) => {
+				  console.error(error);
+				});
+			  },
 
 			changeColor: (index, color) => {
 				//get the store

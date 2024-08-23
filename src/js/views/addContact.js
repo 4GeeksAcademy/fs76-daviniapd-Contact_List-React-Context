@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { Context } from '../store/appContext';
 
 export const AddContact = () => {
     const { store, actions } = useContext(Context);
+    const [initialAlert, setInitialAlert] = useState(null);
     const [newContact, setNewContact] = useState({
         name: '',
         email: '',
@@ -12,6 +13,10 @@ export const AddContact = () => {
     });
     const [alert, setAlert] = useState(null);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setInitialAlert({ type: 'warning', message: 'Please check in the API that there is a slug called <strong><u>sole</u></strong> and if not, create it before continue.' });
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -33,6 +38,12 @@ export const AddContact = () => {
 
     return (
         <>
+            {initialAlert && (
+                <div className={`alert m-5 fade show alert-${initialAlert.type}`} role="alert">
+                    <span dangerouslySetInnerHTML={{ __html: initialAlert.message }} />
+                    <i type="button" className="btn-close float-end" data-bs-dismiss="alert" aria-label="Close" onClick={() => setInitialAlert(null)}></i>
+                </div>
+            )}
             <form onSubmit={handleSubmit} className="m-5 mx-auto w-75">
                 <h1 className="text-center">Add a new contact</h1>
                 {alert && (

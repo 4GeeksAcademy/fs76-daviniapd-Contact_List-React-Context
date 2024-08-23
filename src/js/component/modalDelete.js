@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { Context } from "../store/appContext";
 
-export const ModalDelete = ({ showModal, setShowModal }) => {
+export const ModalDelete = ({ showModal, setShowModal, contactId }) => {
+    const { store, actions } = useContext(Context);
     const handleClose = () => {
-        setShowModal(false);
+      setShowModal(false);
     };
+  
+    const deleteContactAlerts = () => {
+        actions.deleteContacts(contactId).then(() => {
+          setShowModal(false);
+          actions.loadContacts();
+        });
+      }
+    
+  
 
     return (
         <div
@@ -22,7 +33,7 @@ export const ModalDelete = ({ showModal, setShowModal }) => {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-primary" onClick={handleClose}>Oh no!</button>
-                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Yes, go on!</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={deleteContactAlerts}>Yes, go on!</button>
                     </div>
                 </div>
             </div>

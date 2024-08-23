@@ -9,18 +9,14 @@ export const Contacts = () => {
 	const { store, actions } = useContext(Context);
 	const [loading, setLoading] = useState(true);
 	const [showModal, setShowModal] = useState(false);
+	const [selectedContactId, setSelectedContactId] = useState(null);
 
 	useEffect(() => {
 		actions.loadContacts().then((contacts) => {
-			setLoading(false);
+		  setLoading(false);
 		});
-	}, []);
-
-	// if (!store.contacts || store.contacts.length === 0) {
-	// 	return <div>Your contact list is empty</div>;
-	// } else if (loading) {
-	// 	return <div>Loading...</div>;
-	// }
+	  }, [actions.loadContacts]);
+	  
 
 
 	return (
@@ -36,9 +32,9 @@ export const Contacts = () => {
 					//   <Link to={`/single/${contact.id}`} className="text-decoration-none">
 					<li key={contact.id} className="list-group-item d-flex justify-content-between">
 						<img
-							src="https://cdn-icons-png.flaticon.com/512/9131/9131529.png"
+							src="https://cdn-icons-png.freepik.com/512/3544/3544735.png"
 							alt="profileImage"
-							className="rounded-circle my-auto"
+							className="rounded-circle my-auto ms-4"
 							style={{ height: '100%', maxHeight: '100px' }}
 						/>
 
@@ -59,15 +55,18 @@ export const Contacts = () => {
 							<button className="btn btn-icon">
 								<i className="fa-solid fa-pencil" />
 							</button>
-							<button className="btn btn-icon" onClick={() => setShowModal(true)}>
-								<i className="fa-solid fa-trash" />
-							</button>
+							<button className="btn btn-icon" onClick={() => {
+    setShowModal(true);
+    setSelectedContactId(contact.id);
+}}>
+    <i className="fa-solid fa-trash" />
+</button>
 						</div>
 					</li>
 					//  {/* </Link> */ }
 				))}
 			</ul>
-			{showModal && <ModalDelete showModal={showModal} setShowModal={setShowModal} />}
+			{showModal && <ModalDelete showModal={showModal} setShowModal={setShowModal} contactId={selectedContactId} />}
 			</div>
 	)
 }
