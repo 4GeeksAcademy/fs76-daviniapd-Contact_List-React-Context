@@ -17,8 +17,6 @@ export const ModalDelete = ({ showModal, setShowModal, contactId, navigate }) =>
       });
     };
   
-  
-
     return (
         <div
             className={`modal ${showModal ? 'show' : ''}`}
@@ -41,5 +39,5 @@ export const ModalDelete = ({ showModal, setShowModal, contactId, navigate }) =>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};

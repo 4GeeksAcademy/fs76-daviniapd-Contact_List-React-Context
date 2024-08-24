@@ -7,8 +7,12 @@ export const ModalEdit = ({ showEditModal, contact, onClose, onSave }) => {
     const [phone, setPhone] = useState(contact.phone);
     const [address, setAddress] = useState(contact.address);
     const { store, actions } = useContext(Context);
+    const [alert, setAlert] = useState(null);
 
-    const handleSave = () => {
+    const handleSave = () => {         if (!name.trim() || !email.trim() || !phone.trim() || !address.trim()) {
+        if (!alert || alert.type !== 'danger') {
+            setAlert({ type: 'danger', message: ' Please complete all the fields' });
+        }} else {
         const updatedContact = {
             id: contact.id,
             name,
@@ -17,6 +21,7 @@ export const ModalEdit = ({ showEditModal, contact, onClose, onSave }) => {
             address,
         };
         onSave(updatedContact);
+    }
     };
 
     return (
@@ -32,6 +37,12 @@ export const ModalEdit = ({ showEditModal, contact, onClose, onSave }) => {
                         <i type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={onClose}></i>
                     </div>
                     <div className="modal-body">
+                    {alert && (
+                    <div className={`alert fade show alert-${alert.type}`} role="alert"><i className="fa-solid fa-triangle-exclamation"></i>
+                        {alert.message}
+                        <i type="button" className="btn-close float-end" data-bs-dismiss="alert" aria-label="Close" onClick={() => setAlert(null)}></i>
+                    </div>
+                )}
                         <form>
                             <div className="form-group">
                                 <label>Full Name</label>
