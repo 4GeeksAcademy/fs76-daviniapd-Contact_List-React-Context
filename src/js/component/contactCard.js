@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { ModalDelete } from "./modalDelete";
+import { ModalEdit } from "./modalEdit";
 
 export const ContactCard = () => {
 	const { store, actions } = useContext(Context);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedContactId, setSelectedContactId] = useState(null);
+  const [editingContact, setEditingContact] = useState(null);
+	const [showEditModal, setShowEditModal] = useState(false);
 	const params = useParams();
 	const navigate = useNavigate();
 
@@ -16,6 +19,30 @@ export const ContactCard = () => {
 	}, []);
 
 	const contact = store.contacts.find((contact) => contact.id === parseInt(params.theid));
+  const handleEditContact = (contact) => {
+		setEditingContact(contact);
+		setShowEditModal(true);
+	  };
+	
+	  const handleSaveContact = (updatedContact) => {
+		console.log("Updated Contact:", updatedContact);
+		actions.updateContact(updatedContact, 
+			() => {
+				console.log("Contact updated successfully");
+				setEditingContact(null);
+				setShowEditModal(false);
+			},
+			() => {
+				console.error("Error updating contact");
+			}
+		);
+	};
+	  
+	  const handleCloseModal = () => {
+		setEditingContact(null);
+		setShowEditModal(false);
+	  };
+
 
 	return (
 		<>
@@ -61,9 +88,13 @@ export const ContactCard = () => {
               </span>
 
               <div className="d-flex justify-content-center align-items-end">
-                <button className="btn btn-icon">
-                  <i className="fa-solid fa-pencil" />
-                </button>
+							<button
+								className="btn btn-icon" onClick={() => {
+									setShowEditModal(true);
+									handleEditContact(contact)
+								}}>
+								<i className="fa-solid fa-pencil" />
+							</button>
                 <button
                   className="btn btn-icon"
                   onClick={() => {
@@ -76,6 +107,15 @@ export const ContactCard = () => {
               </div>
             </div>
           </div>
+          {showEditModal && (
+				<ModalEdit
+					contact={editingContact}
+					onClose={handleCloseModal}
+					onSave={handleSaveContact}
+					showEditModal={showEditModal}
+					onHide={() => setShowEditModal(false)}
+				/>
+			)}
           {showModal && (
             <ModalDelete
               showModal={showModal}
