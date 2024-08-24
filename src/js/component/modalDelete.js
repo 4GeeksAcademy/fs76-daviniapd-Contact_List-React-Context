@@ -13,7 +13,7 @@ export const ModalDelete = ({ showModal, setShowModal, contactId, navigate }) =>
       actions.deleteContacts(contactId).then(() => {
         setShowModal(false);
         actions.loadContacts();
-        navigate("/contacts"); // Redirige a contacts.js después de eliminar el contacto
+        navigate("/contacts"); 
       });
     };
   
