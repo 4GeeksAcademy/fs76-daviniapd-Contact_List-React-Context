@@ -8,8 +8,6 @@ export const ModalEdit = ({ showEditModal, contact, onClose, onSave }) => {
     const [address, setAddress] = useState(contact.address);
     const { store, actions } = useContext(Context);
 
-
-
     const handleSave = () => {
         const updatedContact = {
             id: contact.id,

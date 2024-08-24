@@ -18,10 +18,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			contacts: []
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
 			
 			addContact: (newContact, onSuccess, onError) => {
 				fetch('https://playground.4geeks.com/contact/agendas/sole/contacts', {
@@ -79,20 +75,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			  },
 
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+			updateContact: (updatedContact, onSuccess, onError) => {
+				fetch(`https://playground.4geeks.com/contact/agendas/sole/contacts/${updatedContact.id}`, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(updatedContact)
+				})
+				.then(resp => resp.json())
+				.then(data => {
+					const store = getStore();
+					const updatedContacts = store.contacts.map(contact => 
+						contact.id === updatedContact.id ? updatedContact : contact
+					);
+					setStore({ contacts: updatedContacts });
+					onSuccess();
+				})
+				.catch(error => {
+					console.log(error);
+					onError();
 				});
+			},
 
-				//reset the global store
-				setStore({ demo: demo });
-			}
 		}
 	};
 };

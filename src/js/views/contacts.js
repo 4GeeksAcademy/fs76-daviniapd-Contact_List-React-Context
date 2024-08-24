@@ -16,25 +16,34 @@ export const Contacts = () => {
 
 	useEffect(() => {
 		actions.loadContacts().then((contacts) => {
-			setLoading(false);
+		  setLoading(false);
 		});
-	}, [actions.loadContacts]);
-
-	const handleEditContact = (contact) => {
+	  }, [actions.loadContacts]);
+	
+	  const handleEditContact = (contact) => {
 		setEditingContact(contact);
 		setShowEditModal(true);
+	  };
+	
+	  const handleSaveContact = (updatedContact) => {
+		console.log("Updated Contact:", updatedContact);
+		actions.updateContact(updatedContact, 
+			() => {
+				console.log("Contact updated successfully");
+				setEditingContact(null);
+				setShowEditModal(false);
+			},
+			() => {
+				console.error("Error updating contact");
+			}
+		);
 	};
-
-	const handleSaveContact = (updatedContact) => {
-		actions.updateContact(updatedContact);
+	  
+	  const handleCloseModal = () => {
 		setEditingContact(null);
 		setShowEditModal(false);
-	};
+	  };
 
-	const handleCloseModal = () => {
-		setEditingContact(null);
-		setShowEditModal(false);
-	};
 
 	return (
 		<div className="container m-5 mx-auto w-75">
