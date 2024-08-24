@@ -1,3 +1,59 @@
 /* 
     General Styles
 */
+body {
+
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+}
+
+.container {
+    height: 100vh;
+}
+
+.card {
+    width: 380px;
+    border: 1px solid  #a9a8a8;
+    border-radius: 15px;
+    background-color: #fff;
+    position: relative;
+    height: 370px;
+}
+
+.upper {
+    height: 100px;
+
+}
+
+.upper img {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    height: 100px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+
+}
+
+.user {
+    position: relative;
+}
+
+.profile img {
+    height: 80px;
+    width: 80px;
+    margin-top: 2px;
+
+
+}
+
+.profile {
+    position: absolute;
+    top: -50px;
+    left: 38%;
+    height: 90px;
+    width: 90px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+
+}

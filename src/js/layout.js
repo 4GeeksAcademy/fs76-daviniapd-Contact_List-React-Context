@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { AddContact } from "./views/addContact";
 import { Contacts } from "./views/contacts";
-import { Single } from "./views/single";
+import { ContactCard } from "./component/contactCard";
 import injectContext from "./store/appContext";
 
 
@@ -23,7 +23,7 @@ const Layout = () => {
 					<Routes>
 						<Route path="/" element={<AddContact />} />
 						<Route path="/contacts" element={<Contacts />} />
-						<Route path="/single/:theid" element={<Single />} />
+						<Route path="/contactCard/:theid" element={<ContactCard />} />
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
 					<Footer />

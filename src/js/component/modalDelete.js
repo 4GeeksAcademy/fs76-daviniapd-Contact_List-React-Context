@@ -1,19 +1,22 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router";
 
-export const ModalDelete = ({ showModal, setShowModal, contactId }) => {
+export const ModalDelete = ({ showModal, setShowModal, contactId, navigate }) => {
     const { store, actions } = useContext(Context);
+  
     const handleClose = () => {
       setShowModal(false);
     };
   
     const deleteContactAlerts = () => {
-        actions.deleteContacts(contactId).then(() => {
-          setShowModal(false);
-          actions.loadContacts();
-        });
-      }
-    
+      actions.deleteContacts(contactId).then(() => {
+        setShowModal(false);
+        actions.loadContacts();
+        navigate("/contacts"); // Redirige a contacts.js después de eliminar el contacto
+      });
+    };
+  
   
 
     return (
