@@ -1,4 +1,3 @@
-import { redirect } from "react-router";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {

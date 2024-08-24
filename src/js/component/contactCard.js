@@ -17,8 +17,6 @@ export const ContactCard = () => {
 
 	const contact = store.contacts.find((contact) => contact.id === parseInt(params.theid));
 
-
-
 	return (
 		<>
 			<div className="m-4 d-flex justify-content-end">
