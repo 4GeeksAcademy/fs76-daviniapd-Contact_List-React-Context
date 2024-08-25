@@ -52,7 +52,7 @@ export const ContactCard = () => {
 						Back Contacts List
 					</span>
 				</Link>
-				<Link to="/">
+				<Link to="/addContact">
 					<span className="btn btn-success btn-lg" href="#" role="button">
 						Go Add Contact
 					</span>

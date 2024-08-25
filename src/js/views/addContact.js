@@ -75,6 +75,11 @@ export const AddContact = () => {
                 </div>
                 <Link to="/contacts">or get back to contact</Link>
             </form>
+            <div className="fixed-bottom mb-3">
+            <Link to="/">
+					<button className="btn btn-outline-info m-5">Select Design</button>
+				</Link>
+                </div>
         </>
     );
 };
