@@ -9,10 +9,8 @@ export const AddContactV2 = () => {
 	return (
 		<>
 			<div className="d-flex justify-content-center align-items-center h-100 flex-column m-5">
-				<Link to="/">
-					<button className="btn btn-outline-info mb-2">Select Design</button>
-				</Link>
-				<h1 className="text-center" id="titleHomr">UNDER CONSTRUCTION</h1>
+	
+				<h1 className="text-center my-3 bg-warning" id="titleHomr">UNDER CONSTRUCTION</h1>
 			</div>
 
 		</>
