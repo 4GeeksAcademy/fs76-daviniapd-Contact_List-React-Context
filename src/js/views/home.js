@@ -10,7 +10,7 @@ export const Home = () => {
 	return (
 	<div className="full-screen-bg">
 
-	<div className="d-flex justify-content-center align-items-center h-75 flex-column">
+	<div className="d-flex justify-content-center align-items-center h-50 flex-column">
 	<h1 className="text-center" id="titleHome">CHOOSE YOUR CONTACT LIST EXPERIENCE</h1>
         <div className="mt-4">
           <Link to="/addContactV2">
